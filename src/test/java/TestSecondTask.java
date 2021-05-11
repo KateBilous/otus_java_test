@@ -9,8 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -24,7 +22,6 @@ public class TestSecondTask {
     @BeforeAll
     static void setUp() {
         WebDriverManager.firefoxdriver().setup();
-        // driver = new FirefoxDriver();
 
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
@@ -35,6 +32,7 @@ public class TestSecondTask {
     }
 
     @Test
+    @Disabled("true")
     @DisplayName("Check address on Otus")
     public void checkoutAddressTest() {
         driver.get("https://otus.ru ");
@@ -76,6 +74,7 @@ public class TestSecondTask {
 
         By search = By.id("searchNumber");
         By phoneBlock = By.xpath("//div[contains(@class, \"new-number-block\")]");
+        By table = By.xpath("//table");
         getWebElement(search).click();
         getWebElement(search).clear();
         getWebElement(search).sendKeys("97");
@@ -133,6 +132,8 @@ public class TestSecondTask {
             driver.quit();
         }
     }
+
+
 
 
 }
