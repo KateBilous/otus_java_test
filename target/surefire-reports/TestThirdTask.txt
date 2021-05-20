@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: TestThirdTask
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 111.504 s <<< FAILURE! - in TestThirdTask
+TestThirdTask.instrumentComparison  Time elapsed: 103.891 s  <<< ERROR!
+org.openqa.selenium.NoSuchElementException: 
+Unable to locate element: //div[@class="title"]//a
+For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'ODS01L1051.lan', ip: 'fe80:0:0:0:1c8e:3e0f:aaf9:a5ef%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.7', java.version: '1.8.0_131'
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 72.0.1, javascriptEnabled: true, moz:accessibilityChecks: false, moz:buildID: 20200107212822, moz:geckodriverVersion: 0.26.0, moz:headless: false, moz:processID: 70626, moz:profile: /var/folders/6f/frjvqyj55wj..., moz:shutdownTimeout: 60000, moz:useNonSpecCompliantPointerOrigin: false, moz:webdriverClick: true, pageLoadStrategy: normal, platform: MAC, platformName: MAC, platformVersion: 19.6.0, rotatable: false, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
+Session ID: cd9aba8d-bfce-5144-90d1-f0f00ff863e4
+*** Element info: {Using=xpath, value=//div[@class="title"]//a}
+	at TestThirdTask.instrumentComparison(TestThirdTask.java:78)
+

@@ -36,6 +36,7 @@ public class TestSecondTask {
     @DisplayName("Check address on Otus")
     public void checkoutAddressTest() {
         driver.get("https://otus.ru ");
+        logger.info("Opened site OTUS");
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         By button = By.xpath("//*[@title=\"Контакты\"]");
@@ -47,8 +48,8 @@ public class TestSecondTask {
         driver.manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
 
         String getAddress = getWebElement(address).getText();
-        System.out.println(getAddress);
-        Assertions.assertEquals(getAddress, "125167, г. Москва, Нарышкинская аллея., д. 5, стр. 2");
+        logger.info("Checked address");
+        Assertions.assertEquals("125167, г. Москва, Нарышкинская аллея., д. 5, стр. 2", getAddress);
 
 
     }
@@ -58,10 +59,12 @@ public class TestSecondTask {
     public void checkTitleTele2() {
 
         driver.get("https://msk.tele2.ru/shop/number");
+        logger.info("Opened site TELE2");
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        logger.info("Checked title");
         String title = driver.getTitle();
-        Assertions.assertEquals(title, "Красивые номера - купить красивый федеральный номер телефона Tele2 Москва" +
-                " и Московская область, продажа красивых мобильных номеров");
+        Assertions.assertEquals("Красивые номера - купить красивый федеральный номер телефона Tele2 Москва" +
+                " и Московская область, продажа красивых мобильных номеров", title);
 
 
     }
@@ -70,14 +73,15 @@ public class TestSecondTask {
     @DisplayName("Check phone numbers")
     public void tele2Test() {
         driver.get("https://msk.tele2.ru/shop/number");
+        logger.info("Opened TELE2");
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
 
         By search = By.id("searchNumber");
         By phoneBlock = By.xpath("//div[contains(@class, \"new-number-block\")]");
-        By table = By.xpath("//table");
         getWebElement(search).click();
         getWebElement(search).clear();
         getWebElement(search).sendKeys("97");
+        //TODO checked numbers
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement element = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(phoneBlock));
@@ -89,6 +93,7 @@ public class TestSecondTask {
     @DisplayName("Assert test on FAQ")
     public void checkFAQTest() {
         driver.get("https://otus.ru");
+        logger.info("Opened OTUS");
         By buttonFAQ = By.xpath("//a[@title= \"FAQ\"]");
         By buttonQuestion = By.xpath("/html/body/div[1]/div/div[3]/div[2]/div[2]/div[4]/div[1]");
         By buttonAnswer = By.xpath("/html/body/div[1]/div/div[3]/div[2]/div[2]/div[4]/div[2]");
@@ -96,9 +101,10 @@ public class TestSecondTask {
 
         getWebElement(buttonFAQ).click();
         getWebElement(buttonQuestion).click();
+        logger.info("Checked FAQ");
         String getText = getWebElement(buttonAnswer).getText();
-        Assertions.assertEquals(getText, "Программу курса в сжатом виде можно увидеть на странице курса после блока с преподавателями." +
-                " Подробную программу курса можно скачать кликнув на “Скачать подробную программу курса”");
+        Assertions.assertEquals("Программу курса в сжатом виде можно увидеть на странице курса после блока с преподавателями." +
+                " Подробную программу курса можно скачать кликнув на “Скачать подробную программу курса”", getText);
 
     }
 
@@ -106,6 +112,7 @@ public class TestSecondTask {
     @DisplayName("Subscription on OTUS")
     public void subscribeOtusTest() {
         driver.get("https://otus.ru");
+        logger.info("Opened OTUS");
         By fieldEmail = By.name("email");
         By submitButton = By.xpath("//div[contains(@class, \"footer2__subscribe-button button button_blue button_as-input\")]");
         By success = By.xpath("//p[contains(@class, \"subscribe-modal__success\")]");
@@ -115,8 +122,9 @@ public class TestSecondTask {
         getWebElement(fieldEmail).clear();
         getWebElement(fieldEmail).sendKeys("test.unroll07@gmail.com");
         getWebElement(fieldEmail).submit();
+        logger.info("Subscribe");
         String text = getWebElement(success).getText();
-        Assertions.assertEquals(text, "Вы успешно подписались");
+        Assertions.assertEquals("Вы успешно подписались", text);
 
 
     }

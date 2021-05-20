@@ -3,11 +3,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
+import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 
 public class TestThirdTask {
@@ -27,7 +35,7 @@ public class TestThirdTask {
     By findMakita = By.xpath("//a[contains(@title,\"Перфоратор MAKITA\")]");
     By addMataToMatch = By.xpath("//label[@for='compare-691618']");
     By activeButton = By.xpath("//button[@title ='Close']");
-    By math = By.className("linkContinueView");
+    By match = By.className("linkContinueView");
     By resultZubr = By.xpath("//div[@class=\"title\"]//a");
     By resultMakita = By.xpath("//*[@id=\"691618_compare\"]/div[2]//a");
 
@@ -60,10 +68,11 @@ public class TestThirdTask {
        getWebElement(activeButton).click();
        driver.navigate().refresh();
        getWebElement(findMakita).findElement(addMataToMatch).click();
-       getWebElement(math).click();
+       getWebElement(match).click();
        logger.info("The instruments added to the compare ");
 
-        Thread.sleep(5000);
+        wait.until(numberOfWindowsToBe(2));
+        wait.until(titleIs("Перфораторы купить в интернет-магазине 220 Вольт"));
         driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
         logger.info("Switched to the new window");
         String text =  driver.findElement(resultZubr).getText();
@@ -76,6 +85,12 @@ public class TestThirdTask {
     private WebElement getWebElement(By locator) {
         return new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+
+    Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+            .withTimeout(Duration.ofSeconds(30))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(NoSuchElementException.class);
+
 
     @AfterAll
     static void tearDown(){
