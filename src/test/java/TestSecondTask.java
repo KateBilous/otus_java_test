@@ -1,5 +1,4 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.hc.core5.util.Asserts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
@@ -32,7 +31,6 @@ public class TestSecondTask {
     }
 
     @Test
-    @Disabled("true")
     @DisplayName("Check address on Otus")
     public void checkoutAddressTest() {
         driver.get("https://otus.ru ");
@@ -40,7 +38,7 @@ public class TestSecondTask {
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         By button = By.xpath("//*[@title=\"Контакты\"]");
-        By address = By.xpath("//div[3][contains(@class, \"styles__Block-c0qfa0-1 dckUnw\")]");
+        By address = By.xpath("/descendant::div[@class= 'c0qfa0-5 cXQVNI'][3]");
 
 
         driver.manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
@@ -49,7 +47,8 @@ public class TestSecondTask {
 
         String getAddress = getWebElement(address).getText();
         logger.info("Checked address");
-        Assertions.assertEquals("125167, г. Москва, Нарышкинская аллея., д. 5, стр. 2", getAddress);
+        Assertions.assertEquals("125167, г. Москва, Нарышкинская аллея., д. 5, стр. 2, тел. +7 499 938-92-02",
+                getAddress);
 
 
     }
@@ -74,18 +73,14 @@ public class TestSecondTask {
     public void tele2Test() {
         driver.get("https://msk.tele2.ru/shop/number");
         logger.info("Opened TELE2");
-        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
 
         By search = By.id("searchNumber");
-        By phoneBlock = By.xpath("//div[contains(@class, \"new-number-block\")]");
+        By phoneBlock = By.xpath("//div[@class='catalog-numbers with-overlay overlay-big']");
         getWebElement(search).click();
         getWebElement(search).clear();
         getWebElement(search).sendKeys("97");
-        //TODO checked numbers
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement element = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(phoneBlock));
-
 
     }
 
@@ -94,9 +89,9 @@ public class TestSecondTask {
     public void checkFAQTest() {
         driver.get("https://otus.ru");
         logger.info("Opened OTUS");
-        By buttonFAQ = By.xpath("//a[@title= \"FAQ\"]");
-        By buttonQuestion = By.xpath("/html/body/div[1]/div/div[3]/div[2]/div[2]/div[4]/div[1]");
-        By buttonAnswer = By.xpath("/html/body/div[1]/div/div[3]/div[2]/div[2]/div[4]/div[2]");
+        By buttonFAQ = By.xpath("//a[@title='FAQ']");
+        By buttonQuestion = By.xpath("(//div[contains(@class, 'faq-question__question')])[4]");
+        By buttonAnswer = By.xpath("(//div[contains(@class, 'faq-question__answer')])[4]");
 
 
         getWebElement(buttonFAQ).click();
@@ -114,7 +109,6 @@ public class TestSecondTask {
         driver.get("https://otus.ru");
         logger.info("Opened OTUS");
         By fieldEmail = By.name("email");
-        By submitButton = By.xpath("//div[contains(@class, \"footer2__subscribe-button button button_blue button_as-input\")]");
         By success = By.xpath("//p[contains(@class, \"subscribe-modal__success\")]");
 
 
@@ -140,8 +134,6 @@ public class TestSecondTask {
             driver.quit();
         }
     }
-
-
 
 
 }
